@@ -7,7 +7,7 @@ import edu.princeton.cs.algs4.Stack;
 /**
  * CSIS 2420
  * KD-Trees Assignment 
- * @author David Jones and 
+ * @author David Jones and Mason Parry
  */
 public class PointST<Value> 
 {

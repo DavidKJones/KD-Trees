@@ -5,7 +5,7 @@ import edu.princeton.cs.algs4.Point2D;
 /**
  * CSIS 2420
  * KD-Trees Assignment 
- * @author David Jones and 
+ * @author David Jones and Mason Parry
  */
 public class KdTreeST<Value> 
 {
