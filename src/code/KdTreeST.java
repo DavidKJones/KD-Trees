@@ -12,6 +12,7 @@ import edu.princeton.cs.algs4.Stack;
 public class KdTreeST<Value> 
 {
     private Node root; // Root of KDTree
+    private int size;
     
     private class Node 
     {
@@ -30,19 +31,20 @@ public class KdTreeST<Value>
 	//construct an empty symbol table of points
 	public KdTreeST()
 	{
-
+		root = null;
+		size = 0;
 	}
 	
 	//is the symbol table empty?
 	public boolean isEmpty()
 	{
-		return false;
+		return size() == 0;
 	}
 	
 	//number of points
 	public int size()
 	{
-		return 0;
+		return size;
 	}
 	
 	//associate the value val with point p
@@ -52,7 +54,8 @@ public class KdTreeST<Value>
 
     private Node put(Node x, Point2D p, Value val, boolean vertical) {
     	if (x == null) {
-    		return new Node(p, val, new RectHV(-Double.MAX_VALUE, Double.MAX_VALUE, -Double.MAX_VALUE, Double.MAX_VALUE));
+    		size++;
+    		return new Node(p, val, new RectHV(-Double.MAX_VALUE, -Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE));
     	}
     	double cmp;
 		if(vertical)
@@ -157,8 +160,7 @@ public class KdTreeST<Value>
 		}
 		
 		return closestPoint;
-	}
-	
+    }
     
     public static void main(String[] args) {
 		RectHV rect1 = new RectHV(2,5,0,1);
