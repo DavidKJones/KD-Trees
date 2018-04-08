@@ -29,13 +29,15 @@ Programming Assignment 5: Kd-Trees
 	It uses a private recursive method that will check if the point in that node
 	intersects wit the predefined range. If it does then we check it's two children
 	as well. If it does intersect with the range then we push that point into a stack
-	and when all succesful points have been checked we return the stack.
+	and when all successful points have been checked we return the stack.
 
 /******************************************************************************
  *  Describe your method for nearest neighbor search in a kd-tree.
  *****************************************************************************/
-	We compare the distance from the defined point to all the points inside the
-	tree. We keep track of which point is currently closest and iterate through.
+	We loop traverse through the kd-tree by determining if the current node(starts off at the root),
+	left node, or the right node has the shortest distance and setting the new current node to the
+	node that contains the closest point. We keep going until we come to the end of the
+	tree or if the current node is actually contains the shortest distance.
 
 /******************************************************************************
  *  How many nearest neighbor calculations can your brute-force
@@ -51,11 +53,12 @@ Programming Assignment 5: Kd-Trees
                        calls to nearest() per second
                      brute force               2d-tree
                      ---------------------------------
-input100K.txt
+input100K.txt		231 calls 				152 calls
 
-input1M.txt
+input1M.txt			62,500 calls			13,513 calls 
 
-
+ *  I chose to check for 1000 starting points and found the nearest point for each starting point.
+ 	By the end of the execution I divided 1000 by the amount of time that was taken to finish the program.
 
 /******************************************************************************
  *  Known bugs / limitations.
@@ -73,6 +76,7 @@ input1M.txt
 /******************************************************************************
  *  Describe any serious problems you encountered.                    
  *****************************************************************************/
+ 
 
 
 /******************************************************************************
@@ -80,7 +84,7 @@ input1M.txt
  *  the protocol as described on the assignment page. Give one
  *  sentence explaining what each of you contributed.
  *****************************************************************************/
-
+ Mason and David both worked on the KdTreeST and PointST together.
 
 
 

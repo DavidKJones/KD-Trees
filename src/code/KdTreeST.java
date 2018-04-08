@@ -1,7 +1,9 @@
 package code;
 
+import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.Queue;
+import edu.princeton.cs.algs4.RectHV;
 import edu.princeton.cs.algs4.Stack;
 
 /**
@@ -137,34 +139,40 @@ public class KdTreeST<Value>
 	//a nearest neighbor to point p; null if the symbol table is empty
 	public Point2D nearest(Point2D p)
 	{
-		//return null if the binary tree is empty
-		if(isEmpty())
+		if(p == null)
 			return null;
 		
-		Point2D closestPoint = null;
-		double distance = Double.MAX_VALUE;
+		//start at the root
+		Node currentNode = root;
 		
-		//loops through all the points to find the closest one to p
-		for(Point2D cP : points())
+		//check current node left and right nodes and compare distances to find
+		//out which subtree to traverse
+		while(currentNode.left != null && currentNode.right != null)
 		{
-			//dont want to compare the distance with itself (it would automatically win!)
-			if(p.equals(cP))
-				continue;
+			double dist = p.distanceSquaredTo(currentNode.p);
+			double distL = p.distanceSquaredTo(currentNode.left.p);
+			double distR = p.distanceSquaredTo(currentNode.right.p);
 			
-			double currentDist = cP.distanceSquaredTo(p);
-			if(currentDist < distance)
+			if(distL < distR && distL < dist)
 			{
-				distance = currentDist;
-				closestPoint = cP;
+				currentNode = currentNode.left;
 			}
+			else if(distR < distL && distR < dist)
+			{
+				currentNode = currentNode.right;
+			}
+			else if(dist <= distL && dist <= distR)
+			{
+				return currentNode.p;
+			}
+			
 		}
-		
-		return closestPoint;
+		return null;
     }
     
     public static void main(String[] args) {
-		RectHV rect1 = new RectHV(2,5,0,1);
-		RectHV rect2 = new RectHV(3,4,-1,2);
+		RectHV rect1 = new RectHV(0,1,2,5);
+		RectHV rect2 = new RectHV(-1,2,3,4);
 		Point2D point1 = new Point2D(3, 0.5);
 		Point2D point2 = new Point2D(6, 2);
 		Point2D point3 = new Point2D(2,0);
@@ -196,5 +204,31 @@ public class KdTreeST<Value>
 		{
 			System.out.println(p);
 		}
+		
+		
+		In input = new In("src/resources/input100K.txt");
+		KdTreeST<String> kd = new KdTreeST<String>();
+		int count = 0;
+		while(input.hasNextLine())
+		{
+			String[] str = input.readLine().split(" ");
+			Point2D p = new Point2D(Double.parseDouble(str[0]), Double.parseDouble(str[1]));
+			kd.put(p, "Point " + count);
+			count++;
+		}
+		
+		
+		long bT = System.currentTimeMillis();
+		int count2 = 0;
+		for(Point2D p : kd.points())
+		{
+			if(count2 >= 1000)
+				break;			
+			kd.nearest(p);
+			count2++;
+		}
+		
+		System.out.println((System.currentTimeMillis() - bT) * 0.001);
+		System.out.println();
 	}
 }
